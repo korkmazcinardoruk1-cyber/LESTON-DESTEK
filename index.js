@@ -17,21 +17,21 @@ const client = new Client({
     ] 
 });
 
-// LESTON Yetkili Ekip ROL ID'si
+// ETERNAL Yetkili Ekip ROL ID'si
 const YETKILI_ROL_ID = '1450817858094239946'; 
 
 // (OPSİYONEL) Otomatik panel gönderilmesini istediğin KANAL ID'Sİ
 const PANEL_KANAL_ID = ''; 
 
 client.on('ready', async () => {
-    console.log(`✅ LESTON Botu (${client.user.tag}) başarıyla aktifleşti!`);
+    console.log(`✅ ETERNAL Botu (${client.user.tag}) başarıyla aktifleşti!`);
 
     if (PANEL_KANAL_ID) {
         try {
             const channel = await client.channels.fetch(PANEL_KANAL_ID);
             if (channel) {
                 await sendTicketPanel(channel);
-                console.log('✅ LESTON Destek Paneli otomatik olarak kanala atıldı!');
+                console.log('✅ ETERNAL Destek Paneli otomatik olarak kanala atıldı!');
             }
         } catch (err) {
             console.error('Otomatik panel atılırken hata oluştu:', err);
@@ -39,12 +39,12 @@ client.on('ready', async () => {
     }
 });
 
-// LESTON Panel Oluşturma Fonksiyonu
+// ETERNAL Panel Oluşturma Fonksiyonu
 async function sendTicketPanel(channel) {
     const embed = new EmbedBuilder()
-        .setTitle('⚔️ LESTON Destek Paneli')
+        .setTitle('⚔️ ETERNAL Destek Paneli')
         .setDescription(
-            '**LESTON** ailesine ve sunucusuna hoş geldiniz!\n\n' +
+            '**ETERNAL** ailesine ve sunucusuna hoş geldiniz!\n\n' +
             'Aşağıdaki butonları kullanarak ihtiyacınıza uygun kategoriden **destek bileti** oluşturabilirsiniz.\n\n' +
             '**Kategoriler:**\n' +
             '🤝 **Ally:** İttifak talepleri için\n' +
@@ -53,7 +53,7 @@ async function sendTicketPanel(channel) {
             '💼 **Partner:** Partnerlik ve iş birliği için'
         )
         .setColor('#2b2d31')
-        .setFooter({ text: 'LESTON Destek Sistemi' })
+        .setFooter({ text: 'ETERNAL Destek Sistemi' })
         .setTimestamp();
 
     const buttons = new ActionRowBuilder().addComponents(
@@ -159,17 +159,17 @@ client.on('interactionCreate', async (interaction) => {
                             PermissionFlagsBits.SendMessages, 
                             PermissionFlagsBits.AttachFiles,
                             PermissionFlagsBits.ReadMessageHistory
-                        ] // Sadece LESTON Yetkili Ekip görebilir
+                        ] // Sadece ETERNAL Yetkili Ekip görebilir
                     }
                 ]
             });
 
             // Kanal İçi Karşılama Embed'i
             const ticketEmbed = new EmbedBuilder()
-                .setTitle(`🎫 LESTON - ${type.toUpperCase()} Destek Talebi`)
+                .setTitle(`🎫 ETERNAL - ${type.toUpperCase()} Destek Talebi`)
                 .setDescription(`Merhaba ${user}, destek talebiniz oluşturuldu.\nYetkili ekibimiz en kısa sürede sizinle ilgilenecektir.\n\nTalebi sonlandırmak için aşağıdaki butona basabilirsiniz.`)
                 .setColor('#2b2d31')
-                .setFooter({ text: 'LESTON Destek Sistemi' })
+                .setFooter({ text: 'ETERNAL Destek Sistemi' })
                 .setTimestamp();
 
             const closeButton = new ActionRowBuilder().addComponents(
