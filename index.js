@@ -47,15 +47,22 @@ async function sendTicketPanel(channel) {
             '**SMPTr** sunucusuna hoş geldiniz.\n\n' +
             'Aşağıdaki butonları kullanarak ihtiyacınıza uygun kategoriden **destek talebi** oluşturabilirsiniz.\n\n' +
             '**Destek Kategorileri:**\n' +
+            '💬 **Genel Destek:** Genel konu ve sorularınız için\n' +
             '📥 **Ekip Alımı:** Ekibimize katılmak ve başvuru yapmak için\n' +
             '⚠️ **Şikayet:** Yaşadığınız olumsuz durumları ve bildirimleri iletmek için\n' +
-            '❓ **Yardım:** Genel soru, sorun ve bilgi talepleriniz için'
+            '❓ **Yardım:** Teknik yardım ve bilgi talepleriniz için'
         )
         .setColor('#2b2d31')
         .setFooter({ text: 'SMPTr Destek Sistemi' })
         .setTimestamp();
 
     const buttons = new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
+            .setCustomId('ticket_genel')
+            .setLabel('Genel Destek')
+            .setEmoji('💬')
+            .setStyle(ButtonStyle.Secondary),
+
         new ButtonBuilder()
             .setCustomId('ticket_ekip')
             .setLabel('Ekip Alımı')
@@ -108,6 +115,7 @@ client.on('interactionCreate', async (interaction) => {
 
     // 2. TICKET AÇMA BUTONLARI
     const ticketTypes = {
+        'ticket_genel': 'genel-destek',
         'ticket_ekip': 'ekip',
         'ticket_sikayet': 'sikayet',
         'ticket_yardim': 'yardim'
@@ -158,7 +166,7 @@ client.on('interactionCreate', async (interaction) => {
 
             // Kanal İçi Karşılama Embed'i
             const ticketEmbed = new EmbedBuilder()
-                .setTitle(`🎫 SMPTr - ${type.toUpperCase()} Destek Talebi`)
+                .setTitle(`🎫 SMPTr - ${type.toUpperCase()} Talebi`)
                 .setDescription(`Sayın ${user}, destek talebiniz başarıyla oluşturulmuştur.\nYetkili ekibimiz en kısa sürede size yardımcı olacaktır.\n\nTalebi sonlandırmak isterseniz aşağıdaki butonu kullanabilirsiniz.`)
                 .setColor('#2b2d31')
                 .setFooter({ text: 'SMPTr Destek Sistemi' })
