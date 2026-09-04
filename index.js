@@ -47,10 +47,9 @@ async function sendTicketPanel(channel) {
             '**Leston** ailesine ve sunucusuna hoş geldiniz!\n\n' +
             'Aşağıdaki butonları kullanarak ihtiyacınıza uygun kategoriden **destek bileti** oluşturabilirsiniz.\n\n' +
             '**Kategoriler:**\n' +
-            '🤝 **Ally:** İttifak talepleri için\n' +
             '📥 **Ekip Alım:** Ailemize katılmak için\n' +
-            '🔀 **Merge:** Sunucu/Ekip birleşme talepleri için\n' +
-            '💼 **Partner:** Partnerlik ve iş birliği için'
+            '⚠️ **Şikayet:** Şikayet ve bildirimleriniz için\n' +
+            '❓ **Yardım:** Genel yardım ve destek için'
         )
         .setColor('#2b2d31')
         .setFooter({ text: 'Leston Destek Sistemi' })
@@ -58,28 +57,22 @@ async function sendTicketPanel(channel) {
 
     const buttons = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
-            .setCustomId('ticket_ally')
-            .setLabel('Ally')
-            .setEmoji('🤝')
-            .setStyle(ButtonStyle.Primary),
-
-        new ButtonBuilder()
             .setCustomId('ticket_ekip')
             .setLabel('Ekip Alım')
             .setEmoji('📥')
             .setStyle(ButtonStyle.Success),
 
         new ButtonBuilder()
-            .setCustomId('ticket_merge')
-            .setLabel('Merge')
-            .setEmoji('🔀')
-            .setStyle(ButtonStyle.Secondary),
+            .setCustomId('ticket_sikayet')
+            .setLabel('Şikayet')
+            .setEmoji('⚠️')
+            .setStyle(ButtonStyle.Danger),
 
         new ButtonBuilder()
-            .setCustomId('ticket_partner')
-            .setLabel('Partner')
-            .setEmoji('💼')
-            .setStyle(ButtonStyle.Danger)
+            .setCustomId('ticket_yardim')
+            .setLabel('Yardım')
+            .setEmoji('❓')
+            .setStyle(ButtonStyle.Primary)
     );
 
     await channel.send({
@@ -115,10 +108,9 @@ client.on('interactionCreate', async (interaction) => {
 
     // 2. TICKET AÇMA BUTONLARI
     const ticketTypes = {
-        'ticket_ally': 'ally',
         'ticket_ekip': 'ekip',
-        'ticket_merge': 'merge',
-        'ticket_partner': 'partner'
+        'ticket_sikayet': 'sikayet',
+        'ticket_yardim': 'yardim'
     };
 
     if (ticketTypes[customId]) {
