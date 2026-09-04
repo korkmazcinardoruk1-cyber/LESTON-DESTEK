@@ -48,7 +48,7 @@ async function sendTicketPanel(channel) {
             'Aşağıdaki butonları kullanarak ihtiyacınıza uygun kategoriden **destek talebi** oluşturabilirsiniz.\n\n' +
             '**Destek Kategorileri:**\n' +
             '💬 **Genel Destek:** Genel konu ve sorularınız için\n' +
-            '📥 **Ekip Alımı:** Ekibimize katılmak ve başvuru yapmak için\n' +
+            '📝 **Yetkili Başvurusu:** Yetkili ekibimize katılmak ve başvuru yapmak için\n' +
             '⚠️ **Şikayet:** Yaşadığınız olumsuz durumları ve bildirimleri iletmek için\n' +
             '❓ **Yardım:** Teknik yardım ve bilgi talepleriniz için'
         )
@@ -64,9 +64,9 @@ async function sendTicketPanel(channel) {
             .setStyle(ButtonStyle.Secondary),
 
         new ButtonBuilder()
-            .setCustomId('ticket_ekip')
-            .setLabel('Ekip Alımı')
-            .setEmoji('📥')
+            .setCustomId('ticket_basvuru')
+            .setLabel('Yetkili Başvurusu')
+            .setEmoji('📝')
             .setStyle(ButtonStyle.Success),
 
         new ButtonBuilder()
@@ -116,7 +116,7 @@ client.on('interactionCreate', async (interaction) => {
     // 2. TICKET AÇMA BUTONLARI
     const ticketTypes = {
         'ticket_genel': 'genel-destek',
-        'ticket_ekip': 'ekip',
+        'ticket_basvuru': 'yetkili-basvuru',
         'ticket_sikayet': 'sikayet',
         'ticket_yardim': 'yardim'
     };
