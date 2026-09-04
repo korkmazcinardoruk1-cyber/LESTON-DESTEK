@@ -17,48 +17,48 @@ const client = new Client({
     ] 
 });
 
-// Leston Yetkili Ekip ROL ID'si
+// SMPTr Yetkili Ekip ROL ID'si
 const YETKILI_ROL_ID = '1450817858094239946'; 
 
-// (OPSİYONEL) Otomatik panel gönderilmesini istediğin KANAL ID'Sİ
+// (OPSİYONEL) Otomatik panel gönderilmesini istediğiniz KANAL ID'Sİ
 const PANEL_KANAL_ID = ''; 
 
 client.on('ready', async () => {
-    console.log(`✅ Leston Botu (${client.user.tag}) başarıyla aktifleşti!`);
+    console.log(`✅ SMPTr Botu (${client.user.tag}) başarıyla aktifleşti!`);
 
     if (PANEL_KANAL_ID) {
         try {
             const channel = await client.channels.fetch(PANEL_KANAL_ID);
             if (channel) {
                 await sendTicketPanel(channel);
-                console.log('✅ Leston Destek Paneli otomatik olarak kanala atıldı!');
+                console.log('✅ SMPTr Destek Paneli otomatik olarak kanala gönderildi!');
             }
         } catch (err) {
-            console.error('Otomatik panel atılırken hata oluştu:', err);
+            console.error('Otomatik panel gönderilirken bir hata oluştu:', err);
         }
     }
 });
 
-// Leston Panel Oluşturma Fonksiyonu
+// SMPTr Panel Oluşturma Fonksiyonu
 async function sendTicketPanel(channel) {
     const embed = new EmbedBuilder()
-        .setTitle('⚔️ Leston Destek Paneli')
+        .setTitle('🛡️ SMPTr Destek Paneli')
         .setDescription(
-            '**Leston** ailesine ve sunucusuna hoş geldiniz!\n\n' +
-            'Aşağıdaki butonları kullanarak ihtiyacınıza uygun kategoriden **destek bileti** oluşturabilirsiniz.\n\n' +
-            '**Kategoriler:**\n' +
-            '📥 **Ekip Alım:** Ailemize katılmak için\n' +
-            '⚠️ **Şikayet:** Şikayet ve bildirimleriniz için\n' +
-            '❓ **Yardım:** Genel yardım ve destek için'
+            '**SMPTr** sunucusuna hoş geldiniz.\n\n' +
+            'Aşağıdaki butonları kullanarak ihtiyacınıza uygun kategoriden **destek talebi** oluşturabilirsiniz.\n\n' +
+            '**Destek Kategorileri:**\n' +
+            '📥 **Ekip Alımı:** Ekibimize katılmak ve başvuru yapmak için\n' +
+            '⚠️ **Şikayet:** Yaşadığınız olumsuz durumları ve bildirimleri iletmek için\n' +
+            '❓ **Yardım:** Genel soru, sorun ve bilgi talepleriniz için'
         )
         .setColor('#2b2d31')
-        .setFooter({ text: 'Leston Destek Sistemi' })
+        .setFooter({ text: 'SMPTr Destek Sistemi' })
         .setTimestamp();
 
     const buttons = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
             .setCustomId('ticket_ekip')
-            .setLabel('Ekip Alım')
+            .setLabel('Ekip Alımı')
             .setEmoji('📥')
             .setStyle(ButtonStyle.Success),
 
@@ -99,7 +99,7 @@ client.on('interactionCreate', async (interaction) => {
 
     // 1. TICKET KAPATMA BUTONU
     if (customId === 'close_ticket') {
-        await interaction.reply({ content: '🔒 Destek talebi kapatılıyor, kanal 5 saniye içinde silinecektir...', ephemeral: true });
+        await interaction.reply({ content: '🔒 Destek talebiniz sonlandırılıyor, kanal 5 saniye içerisinde silinecektir...', ephemeral: true });
         setTimeout(() => {
             interaction.channel.delete().catch(() => {});
         }, 5000);
@@ -120,7 +120,7 @@ client.on('interactionCreate', async (interaction) => {
         // Zaten açık bileti var mı kontrolü
         const existingChannel = guild.channels.cache.find(c => c.name === channelName);
         if (existingChannel) {
-            return interaction.reply({ content: `⚠️ Zaten açık bir talebiniz bulunuyor: ${existingChannel}`, ephemeral: true });
+            return interaction.reply({ content: `⚠️ Halihazırda açık durumda bir destek talebiniz bulunmaktadır: ${existingChannel}`, ephemeral: true });
         }
 
         await interaction.deferReply({ ephemeral: true });
@@ -151,17 +151,17 @@ client.on('interactionCreate', async (interaction) => {
                             PermissionFlagsBits.SendMessages, 
                             PermissionFlagsBits.AttachFiles,
                             PermissionFlagsBits.ReadMessageHistory
-                        ] // Sadece Leston Yetkili Ekip görebilir
+                        ] // Sadece Yetkili Ekip görebilir
                     }
                 ]
             });
 
             // Kanal İçi Karşılama Embed'i
             const ticketEmbed = new EmbedBuilder()
-                .setTitle(`🎫 Leston - ${type.toUpperCase()} Destek Talebi`)
-                .setDescription(`Merhaba ${user}, destek talebiniz oluşturuldu.\nYetkili ekibimiz en kısa sürede sizinle ilgilenecektir.\n\nTalebi sonlandırmak için aşağıdaki butona basabilirsiniz.`)
+                .setTitle(`🎫 SMPTr - ${type.toUpperCase()} Destek Talebi`)
+                .setDescription(`Sayın ${user}, destek talebiniz başarıyla oluşturulmuştur.\nYetkili ekibimiz en kısa sürede size yardımcı olacaktır.\n\nTalebi sonlandırmak isterseniz aşağıdaki butonu kullanabilirsiniz.`)
                 .setColor('#2b2d31')
-                .setFooter({ text: 'Leston Destek Sistemi' })
+                .setFooter({ text: 'SMPTr Destek Sistemi' })
                 .setTimestamp();
 
             const closeButton = new ActionRowBuilder().addComponents(
@@ -183,7 +183,7 @@ client.on('interactionCreate', async (interaction) => {
 
         } catch (error) {
             console.error(error);
-            await interaction.editReply({ content: '❌ Kanal oluşturulurken bir hata oluştu. Lütfen botun rol izinlerini (Manage Channels) kontrol edin.' });
+            await interaction.editReply({ content: '❌ Destek kanalı oluşturulurken bir hata meydana geldi. Lütfen yetkili izinlerini kontrol ediniz.' });
         }
     }
 });
